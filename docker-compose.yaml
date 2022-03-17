@@ -18,8 +18,12 @@ services:
     environment:
       - APP_SECRET=${APP_SECRET}
     volumes:
-      - .:/var/www/app
-    tty: true
+      - .:/var/www/app:consistent
+    command: >
+      sh -c "yarn install &&
+             yarn encore dev-server --hot --port 9999 --host 0.0.0.0"
+    ports:
+      - "9999:9999"
 
 #  maildev:
 #    image: maildev/maildev
