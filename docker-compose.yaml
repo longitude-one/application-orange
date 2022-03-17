@@ -1,0 +1,32 @@
+version: '3.6'
+services:
+  php:
+    container_name: "orange-php"
+    build:
+      context: ./docker/php
+    restart: "no"
+    environment:
+      - APP_SECRET=${APP_SECRET}
+    volumes:
+      - .:/var/www
+    ports:
+      - "80:8000"
+  yarn:
+    image: "node:17-alpine"
+    working_dir: "/var/www/app"
+    container_name: "orange-yarn"
+    environment:
+      - APP_SECRET=${APP_SECRET}
+    volumes:
+      - .:/var/www/app
+    tty: true
+
+#  maildev:
+#    image: maildev/maildev
+#    container_name: "orange-maildev"
+#    command: bin/maildev --web 80 --smtp 25 --hide-extensions STARTTLS
+#    restart: "no"
+#    ports:
+#      - "8081:80"
+#      - "8025:25"
+#    restart: always
